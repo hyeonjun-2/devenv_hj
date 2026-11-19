@@ -94,3 +94,30 @@ vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
   group = group,
   callback = function(ev) unwatch(ev.buf) end,
 })
+
+-- Markdown: Space mp opens the file in a NEW Chrome window (rendered by the Markdown Viewer extension).
+-- Turn on "Auto reload" in Markdown Viewer to refresh the page on every :w
+local function open_in_chrome_window(path)
+  if vim.fn.has("mac") == 1 then
+    vim.system({ "open", "-na", "Google Chrome", "--args", "--new-window", path }, { detach = true })
+    return
+  end
+  for _, exe in ipairs({ "google-chrome", "google-chrome-stable", "chromium", "chromium-browser" }) do
+    if vim.fn.executable(exe) == 1 then
+      vim.system({ exe, "--new-window", path }, { detach = true })
+      return
+    end
+  end
+  vim.ui.open(path) -- no Chrome: fall back to the default app
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = group,
+  pattern = "markdown",
+  callback = function(ev)
+    vim.keymap.set("n", "<leader>mp", function()
+      vim.cmd("silent! update") -- save first so the browser shows the latest text
+      open_in_chrome_window(vim.api.nvim_buf_get_name(ev.buf))
+    end, { buffer = ev.buf, desc = "Markdown Preview (new Chrome window)" })
+  end,
+})

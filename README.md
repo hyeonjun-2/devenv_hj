@@ -151,6 +151,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 | 창 | `Ctrl-w v` / `Ctrl-w s` | 오른쪽 / 아래로 나누기 |
 | | `Ctrl-w h/j/k/l` | 창 이동 |
 | | `Space wm` | 현재 창 확대 / 원래대로 |
+| Markdown | `Space mp` | 지금 md 파일을 저장하고 Chrome **새 창**에서 열기 (Chrome이 없으면 기본 앱). Markdown Viewer의 Auto reload를 켜면 `:w`마다 새로고침 |
 | 버퍼 | `]b` / `[b` | 다음 / 이전 버퍼 |
 | | `:bd` | 버퍼 닫기 (`:q`는 창만 닫음. 마지막 창이면 nvim 종료) |
 | 자동완성 (입력 모드) | `Ctrl-n` / `Ctrl-p`, `Enter` | 고르기, 확정 |
