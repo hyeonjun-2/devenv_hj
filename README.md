@@ -12,8 +12,8 @@
 ## 1. 설치
 
 ```bash
-git clone <this-repo-url> ~/Desktop/devenv_hj
-cd ~/Desktop/devenv_hj
+git clone https://github.com/hyeonjun-2/devenv_hj.git ~/.devenv_hj
+cd ~/.devenv_hj
 ./install.sh
 ```
 
@@ -57,10 +57,10 @@ macOS는 [Homebrew](https://brew.sh)를 먼저 설치해야 합니다.
 
 ```bash
 # 이 PC에서 고친 뒤
-cd ~/Desktop/devenv_hj && git add -A && git commit -m "..." && git push
+cd ~/.devenv_hj && git add -A && git commit -m "..." && git push
 
 # 다른 PC에서
-cd ~/Desktop/devenv_hj && git pull && ./install.sh --no-packages
+cd ~/.devenv_hj && git pull && ./install.sh --no-packages
 ```
 
 - 플러그인을 업데이트하면(`:Lazy update`) `nvim/lazy-lock.json`이 바뀝니다. 커밋하면 다른 PC도 같은 버전을 받습니다.
@@ -80,14 +80,14 @@ devenv_hj/
     ├── lazy-lock.json         # 플러그인 버전 고정
     └── lua/
         ├── config/
-        │   ├── options.lua    # 줄 번호, 탭 표시, 창 나누는 방향 등
-        │   ├── autocmds.lua   # 탭을 4칸 너비로 표시
-        │   └── lazy.lua       # lazy.nvim 설정 (LazyVim 배포판은 꺼져 있음)
+        │   ├── options.lua    # leader(Space), 검색, 줄 번호, 탭 표시, 창 나누는 방향 등
+        │   ├── autocmds.lua   # 탭 4칸 표시, 마지막 커서 위치, 외부 변경 자동 반영(파일 감시), 창 크기 자동 조절
+        │   └── lazy.lua       # lazy.nvim(플러그인 관리) 설정
         └── plugins/           # 플러그인 하나당 파일 하나
 ```
 
-`nvim/`은 LazyVim starter를 바탕으로 했지만 **LazyVim 배포판은 꺼져 있습니다** (`lua/config/lazy.lua`의 `enabled = false`).
-필요한 플러그인만 `lua/plugins/`에 직접 추가하는 방식입니다. 끄고 싶은 플러그인은 그 파일에 `enabled = false,`를 넣으면 됩니다.
+LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해서 **필요한 플러그인만 `lua/plugins/`에 하나씩** 넣었습니다.
+플러그인을 끄려면 그 파일에 `enabled = false,`를 넣고, 지우려면 파일을 삭제한 뒤 `:Lazy`에서 `X`(clean)를 누르면 됩니다.
 
 ### 플러그인
 
@@ -96,19 +96,25 @@ devenv_hj/
 | lazy.nvim | 플러그인 관리 |
 | vscode.nvim | 테마 (VSCode Dark+, 배경 투명 → 터미널 배경 유지) |
 | lualine.nvim / bufferline.nvim / mini.icons | 아래 상태줄 / 위쪽 버퍼 탭 / 파일 아이콘 |
-| snacks.nvim | 파일·내용 검색(picker), 파일 트리(explorer), 들여쓰기 안내선, 부드러운 스크롤, 창 확대(zoom) |
+| snacks.nvim | 파일·내용 검색(picker), 파일 트리(explorer), 들여쓰기 안내선, 부드러운 스크롤, 창 확대(zoom), 큰 파일 열 때 무거운 기능 끄기(bigfile) |
 | which-key.nvim | 키를 누르다 멈추면 다음 키 목록 표시 |
 | gitsigns.nvim | 줄 옆 git 변경 표시, 변경 단위 되돌리기·blame |
+| aerial.nvim | 현재 파일의 함수·구조체 목록(outline)을 옆 창에 표시 |
+| diffview.nvim | 바뀐 파일 전체를 한 화면에서 리뷰 (파일 목록 + 파일별 좌우 diff), 파일 변경 기록 |
 | mason.nvim / nvim-lspconfig | 언어 서버 설치 / 언어 서버 기본 설정 |
 | blink.cmp | 자동완성 |
 | mini.pairs | 괄호·따옴표 자동 닫기 |
 
 ### 주요 설정
 
-- leader 키: `\` (기본값)
+- leader 키: `Space` (아래 표의 `Space ff`는 Space를 누른 뒤 f, f)
 - 줄 번호 + 상대 줄 번호, 표시 칸(sign column) 항상 표시, 상태줄 하나만(`laststatus = 3`)
 - 탭은 `»`, 줄 끝 공백은 `·`로 표시. **탭은 4칸 너비로 표시** (파일에는 탭 문자 그대로 저장. TF-A처럼 8칸 기준으로 정렬된 코드는 정렬이 조금 어긋나 보일 수 있음)
 - 새 창은 오른쪽 / 아래에 열림
+- 검색: 소문자로만 쓰면 대소문자 무시, 대문자가 섞이면 구분 (`ignorecase` + `smartcase`)
+- 파일을 다시 열면 마지막 커서 위치에서 시작 (`/tmp` 아래 파일은 nvim 기본 설정상 기록 안 됨)
+- nvim 밖에서 바뀐 파일(git checkout 등)은 nvim으로 돌아올 때 자동으로 다시 읽음 (수정 중인 파일은 제외)
+- 터미널 크기가 바뀌면 나눠진 창 크기를 자동으로 고르게 맞춤
 - 진단(diagnostics)은 **에러만** 표시 (경고·힌트는 받지 않음. 다시 보려면 `lsp.lua`의 `Drop warnings...` 블록 삭제)
 
 ---
@@ -119,28 +125,32 @@ devenv_hj/
 
 | 분류 | 키 | 동작 |
 |---|---|---|
-| 찾기 | `\ff` | 파일 이름으로 찾기 |
-| | `\fg` | 프로젝트 전체 내용 검색 |
-| | `\fw` | 커서 아래 단어로 검색 (`grep -w`) |
-| | `\fb` | 열린 버퍼 목록 |
+| 찾기 | `Space ff` | 파일 이름으로 찾기 |
+| | `Space fg` | 프로젝트 전체 내용 검색 |
+| | `Space fw` | 커서 아래 단어로 검색 (`grep -w`) |
+| | `Space fb` | 열린 버퍼 목록 |
 | | (검색 창 안) `Enter` / `Ctrl-v` / `Ctrl-s` / `Ctrl-t` | 현재 창 / 오른쪽 창 / 아래 창 / 새 탭에 열기 |
-| 파일 트리 | `\e` | 왼쪽 파일 트리 열기/닫기 (트리 안에서 `?`로 키 목록) |
+| 파일 트리 | `Space e` | 왼쪽 파일 트리 열기/닫기 (트리 안에서 `?`로 키 목록) |
 | 코드 이동 | `Ctrl-]` | 정의로 이동 (대상 파일이 이미 다른 창에 있으면 그 창으로) |
-| | `\gd` | 정의를 옆 창에 열기 |
+| | `Space gd` | 정의를 옆 창에 열기 |
 | | `gD` | 헤더의 선언으로 이동 |
-| | `\ch` | `.c` ↔ `.h` 전환 (clangd) |
+| | `Space ch` | `.c` ↔ `.h` 전환 (clangd) |
+| | `Space cs` | 현재 파일의 함수 목록 열기/닫기 (aerial. 목록에서 `Enter`로 이동, `q`로 닫기) |
 | | `Ctrl-o` / `Ctrl-i` | 뒤로 / 앞으로 |
 | | `K` | 함수 원형·설명 보기 |
 | | `grr` / `grn` / `gra` | 참조 찾기 / 이름 바꾸기 / 코드 수정 제안 |
 | 에러 | `]d` / `[d` | 다음 / 이전 에러 |
 | | `Ctrl-w d` | 커서 줄의 에러 메시지 크게 보기 |
-| | `\sd` | 에러 목록 |
+| | `Space sd` | 에러 목록 |
 | git | `]h` / `[h` | 다음 / 이전 변경 |
-| | `\ghp` / `\ghr` / `\ghs` | 변경 미리보기 / 되돌리기 / stage |
-| | `\ghb` / `\ghd` | blame / 커밋 버전과 비교 |
+| | `Space ghp` / `Space ghr` / `Space ghs` | 변경 미리보기 / 되돌리기 / stage |
+| | `Space ghb` / `Space ghd` | blame / 커밋 버전과 좌우 비교 |
+| | `Space ghi` | 코드 안에서 diff처럼 보기 켜기/끄기 (바뀐 줄 색칠, 지운 줄 표시, 바뀐 글자 강조) |
+| | `Space gv` | 바뀐 파일 전체 리뷰 열기/닫기 (diffview. `Tab`/`Shift-Tab` 다음/이전 파일, `X` 되돌리기, `g?` 도움말) |
+| | `Space gf` | 현재 파일의 커밋 기록 (diffview) |
 | 창 | `Ctrl-w v` / `Ctrl-w s` | 오른쪽 / 아래로 나누기 |
 | | `Ctrl-w h/j/k/l` | 창 이동 |
-| | `\wm` | 현재 창 확대 / 원래대로 |
+| | `Space wm` | 현재 창 확대 / 원래대로 |
 | 버퍼 | `]b` / `[b` | 다음 / 이전 버퍼 |
 | | `:bd` | 버퍼 닫기 (`:q`는 창만 닫음. 마지막 창이면 nvim 종료) |
 | 자동완성 (입력 모드) | `Ctrl-n` / `Ctrl-p`, `Enter` | 고르기, 확정 |
@@ -193,7 +203,7 @@ bear -- make PLAT=fvp CROSS_COMPILE=aarch64-none-elf- all
 - 빌드 설정(PLAT, 빌드 옵션 등)을 바꾸면 다시 만드세요.
 - **빌드에 들어가지 않는 파일**은 비슷한 파일의 옵션을 빌려 분석해서 가짜 에러가 날 수 있습니다.
   (예: `ENABLE_BACKTRACE=0`일 때 `common/backtrace/backtrace.c`)
-- 어셈블리(`.S`) 함수는 clangd로 정의를 찾을 수 없습니다 → `\fw` 검색이나 ctags.
+- 어셈블리(`.S`) 함수는 clangd로 정의를 찾을 수 없습니다 → `Space fw` 검색이나 ctags.
 - buildroot가 소스를 복사해서 빌드하는 경우(`*_OVERRIDE_SRCDIR`), 그 결과로 만든 `compile_commands.json`은
   복사본 경로를 가리킵니다. 원본 폴더에서 `make O=...`로 빌드해서 만드는 게 좋습니다.
 - clangd 색인 캐시는 프로젝트 루트의 `.cache/clangd/`에 생깁니다. `compile_commands.json`과 함께 git에서 제외하세요

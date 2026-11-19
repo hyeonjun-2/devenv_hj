@@ -1,3 +1,4 @@
+-- Bootstrap lazy.nvim (plugin manager): clone it on first run
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -15,42 +16,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- Every file in lua/plugins/ returns a list of plugin specs
   spec = {
-    -- add LazyVim and import its plugins
-    -- enabled = false: LazyVim and all of its plugins are off (plain nvim).
-    -- Set to true (or remove) to turn LazyVim back on.
-    { "LazyVim/LazyVim", import = "lazyvim.plugins", enabled = false },
-    -- import/override with your plugins
     { import = "plugins" },
   },
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    lazy = false, -- plugins load at startup unless their spec says otherwise (event / cmd / keys)
+    version = false, -- use the latest git commit (exact versions are pinned in lazy-lock.json)
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "vscode", "habamax" } }, -- colorscheme to use while installing on first run
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
-  performance = {
-    rtp = {
-      -- disable some rtp plugins
-      -- Commented out to keep nvim's built-in plugins on, same as plain nvim
-      disabled_plugins = {
-        -- "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
-        -- "tarPlugin",
-        -- "tohtml",
-        -- "tutor",
-        -- "zipPlugin",
-      },
-    },
+    enabled = true, -- check for plugin updates in the background
+    notify = false, -- but don't pop up a message (see :Lazy)
   },
 })

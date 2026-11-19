@@ -8,6 +8,7 @@ return {
       indent = {}, -- indent guides
       scroll = {}, -- smooth scrolling
       explorer = {}, -- file tree sidebar
+      bigfile = {}, -- huge files (logs, dumps): turn off heavy features so they open fast
     },
     keys = {
       { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },

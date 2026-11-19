@@ -2,8 +2,8 @@
 #
 # devenv_hj installer: Neovim + tmux development environment (Linux / macOS)
 #
-#   git clone <this repo> ~/Desktop/devenv_hj
-#   cd ~/Desktop/devenv_hj && ./install.sh
+#   git clone <this repo> ~/.devenv_hj
+#   cd ~/.devenv_hj && ./install.sh
 #
 # Safe to run again: existing files are backed up, finished steps are skipped.
 # Run ./install.sh --help for options.
