@@ -3,15 +3,18 @@ return {
     "neovim/nvim-lspconfig", -- default configs (cmd, filetypes, root markers) for language servers
     lazy = false,
     config = function()
-      -- clangd: only override cmd to add flags
+      -- clangd: only override cmd to add flags.
+      -- --query-driver = compilers clangd may run to find their system headers:
+      -- ~/toolchains (any target: aarch64, arm-none-eabi, riscv, ...), /opt, apt gcc, buildroot host toolchains
+      local toolchains = vim.fn.expand("~/toolchains")
+      local drivers = table.concat({
+        toolchains .. "/**/bin/*-gcc", toolchains .. "/**/bin/*-g++",
+        "/opt/**/bin/*-gcc", "/opt/**/bin/*-g++",
+        "/usr/bin/*-gcc*", "/usr/bin/*-g++*",
+        "**/host/bin/*-gcc", "**/host/bin/*-g++",
+      }, ",")
       vim.lsp.config("clangd", {
-        cmd = {
-          "clangd",
-          "--background-index",
-          -- Compilers clangd may run to find system headers
-          -- (/opt Arm GNU toolchains, apt cross/system gcc, buildroot host toolchains)
-          "--query-driver=/opt/**/bin/*-gcc,/opt/**/bin/*-g++,/usr/bin/*-gcc*,/usr/bin/*-g++*,**/host/bin/*-gcc,**/host/bin/*-g++",
-        },
+        cmd = { "clangd", "--background-index", "--query-driver=" .. drivers },
       })
 
       -- Drop warnings/info/hints from language servers entirely, keep errors only.

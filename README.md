@@ -169,7 +169,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 | `prefix Tab` | 직전 창(window)으로 |
 | `prefix [` → `v` → `y` | 복사 모드 → 선택 → 클립보드로 복사 |
 | `prefix r` | 설정 다시 읽기 |
-| `prefix Ctrl-s` / `prefix Ctrl-r` | 세션 저장 / 복원 (15분마다 자동 저장, 자동 복원은 꺼짐) |
+| `prefix Ctrl-s` / `prefix Ctrl-r` | 세션 저장 / 복원 (15분마다 자동 저장, tmux를 새로 켜면 마지막 저장 상태로 자동 복원) |
 | `prefix a` / `prefix m` | 현재 창 activity 알림 / 10초 silence 알림 토글 |
 
 ---
@@ -209,7 +209,7 @@ bear -- make PLAT=fvp CROSS_COMPILE=aarch64-none-elf- all
   복사본 경로를 가리킵니다. 원본 폴더에서 `make O=...`로 빌드해서 만드는 게 좋습니다.
 - clangd 색인 캐시는 프로젝트 루트의 `.cache/clangd/`에 생깁니다. `compile_commands.json`과 함께 git에서 제외하세요
   (`.git/info/exclude` 등).
-- 크로스 컴파일러 헤더를 찾도록 `--query-driver`에 `/opt/**/bin/*-gcc`, `/usr/bin/*-gcc*`, buildroot `**/host/bin/*-gcc`가
+- 크로스 컴파일러 헤더를 찾도록 `--query-driver`에 `~/toolchains/**/bin/*-gcc`, `/opt/**/bin/*-gcc`, `/usr/bin/*-gcc*`, buildroot `**/host/bin/*-gcc`가
   허용되어 있습니다 (`nvim/lua/plugins/lsp.lua`). 다른 위치의 툴체인을 쓰면 여기에 추가하세요.
 
 ---
