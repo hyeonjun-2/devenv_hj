@@ -15,6 +15,7 @@ return {
       { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Grep Word Under Cursor" },
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jump History (Ctrl-o list)" },
       { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
       { "<leader>wm", function() Snacks.zen.zoom() end, desc = "Toggle Zoom Window" },
       {

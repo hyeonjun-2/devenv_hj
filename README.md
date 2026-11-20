@@ -95,7 +95,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 |---|---|
 | lazy.nvim | 플러그인 관리 |
 | vscode.nvim | 테마 (VSCode Dark+, 배경 투명 → 터미널 배경 유지) |
-| lualine.nvim / bufferline.nvim / mini.icons | 아래 상태줄 / 위쪽 버퍼 탭 / 파일 아이콘 |
+| lualine.nvim / bufferline.nvim / mini.icons | 아래 상태줄 (파일 이름 옆에 커서가 있는 함수 이름 표시) / 위쪽 버퍼 탭 / 파일 아이콘 |
 | snacks.nvim | 파일·내용 검색(picker), 파일 트리(explorer), 들여쓰기 안내선, 부드러운 스크롤, 창 확대(zoom), 큰 파일 열 때 무거운 기능 끄기(bigfile) |
 | which-key.nvim | 키를 누르다 멈추면 다음 키 목록 표시 |
 | gitsigns.nvim | 줄 옆 git 변경 표시, 변경 단위 되돌리기·blame |
@@ -130,6 +130,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 | | `Space fg` | 프로젝트 전체 내용 검색 |
 | | `Space fw` | 커서 아래 단어로 검색 (`grep -w`) |
 | | `Space fb` | 열린 버퍼 목록 |
+| | `Space sj` | 이동 기록(`Ctrl-o`로 돌아가는 곳) 목록에서 골라 이동 |
 | | (검색 창 안) `Enter` / `Ctrl-v` / `Ctrl-s` / `Ctrl-t` | 현재 창 / 오른쪽 창 / 아래 창 / 새 탭에 열기 |
 | 파일 트리 | `Space e` | 왼쪽 파일 트리 열기/닫기 (트리 안에서 `?`로 키 목록) |
 | 코드 이동 | `Ctrl-]` | 정의로 이동 (대상 파일이 이미 다른 창에 있으면 그 창으로) |

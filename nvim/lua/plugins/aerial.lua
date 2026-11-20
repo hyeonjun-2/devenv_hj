@@ -1,6 +1,8 @@
 return {
   {
     "stevearc/aerial.nvim", -- outline: functions / structs / macros of the current file
+    -- load with files (not only on Space cs) so the statusline can show the current function
+    event = { "BufReadPost", "BufNewFile" },
     cmd = { "AerialToggle", "AerialOpen", "AerialNavToggle" },
     keys = {
       { "<leader>cs", "<cmd>AerialToggle<cr>", desc = "Symbols Outline (aerial)" },
