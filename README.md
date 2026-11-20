@@ -115,6 +115,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 - 파일을 다시 열면 마지막 커서 위치에서 시작 (`/tmp` 아래 파일은 nvim 기본 설정상 기록 안 됨)
 - nvim 밖에서 바뀐 파일(git checkout 등)은 nvim으로 돌아올 때 자동으로 다시 읽음 (수정 중인 파일은 제외)
 - 터미널 크기가 바뀌면 나눠진 창 크기를 자동으로 고르게 맞춤
+- 코드 접기: 문법(treesitter) 기준으로 함수·블록 단위. 파일은 펼친 상태로 열림
 - 진단(diagnostics)은 **에러만** 표시 (경고·힌트는 받지 않음. 다시 보려면 `lsp.lua`의 `Drop warnings...` 블록 삭제)
 
 ---
@@ -142,6 +143,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 | 에러 | `]d` / `[d` | 다음 / 이전 에러 |
 | | `Ctrl-w d` | 커서 줄의 에러 메시지 크게 보기 |
 | | `Space sd` | 에러 목록 |
+| | `Space ud` | 에러 표시 끄기/켜기 (모든 파일. 줄 끝 메시지, 왼쪽 E 표시, 밑줄 전부) |
 | git | `]h` / `[h` | 다음 / 이전 변경 |
 | | `Space ghp` / `Space ghr` / `Space ghs` | 변경 미리보기 / 되돌리기 / stage |
 | | `Space ghb` / `Space ghd` | blame / 커밋 버전과 좌우 비교 |
@@ -151,6 +153,7 @@ LazyVim 같은 배포판은 쓰지 않고, LazyVim의 설정 방식만 참고해
 | 창 | `Ctrl-w v` / `Ctrl-w s` | 오른쪽 / 아래로 나누기 |
 | | `Ctrl-w h/j/k/l` | 창 이동 |
 | | `Space wm` | 현재 창 확대 / 원래대로 |
+| 접기 | `za` / `zR` / `zM` | 커서 위치 블록 접기·펼치기 / 전체 펼치기 / 전체 접기 |
 | Markdown | `Space mp` | 지금 md 파일을 저장하고 Chrome **새 창**에서 열기 (Chrome이 없으면 기본 앱). Markdown Viewer의 Auto reload를 켜면 `:w`마다 새로고침 |
 | 버퍼 | `]b` / `[b` | 다음 / 이전 버퍼 |
 | | `:bd` | 버퍼 닫기 (`:q`는 창만 닫음. 마지막 창이면 nvim 종료) |

@@ -23,3 +23,9 @@ vim.o.splitbelow = true
 
 -- One statusline at the bottom, even with split windows
 vim.o.laststatus = 3
+
+-- Folding by syntax (treesitter): functions, if/switch blocks, structs. za toggles, zR/zM open/close all.
+-- foldlevel 99 = files open fully unfolded. Languages without a treesitter parser simply don't fold.
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevel = 99

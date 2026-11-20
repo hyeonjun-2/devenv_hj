@@ -38,6 +38,13 @@ return {
         jump = { severity = errors_only }, -- ]d / [d skip warnings too
       })
 
+      -- Space ud: turn error display on/off (all buffers). Same key as LazyVim.
+      vim.keymap.set("n", "<leader>ud", function()
+        local on = not vim.diagnostic.is_enabled()
+        vim.diagnostic.enable(on)
+        vim.notify("Diagnostics " .. (on and "ON" or "OFF"))
+      end, { desc = "Toggle Diagnostics (errors)" })
+
       -- Keymaps set only in buffers where a language server is attached
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
